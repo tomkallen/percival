@@ -3,7 +3,7 @@ const token = '411060038:AAEjx0DVlosmt91lFb1NVlVYQlLrfmYqO7s';
 const bot = new TelegramBot(token, {
     polling: true
 });
-
+const emoji = require('node-emoji').emoji;
 const users = [];
 
 bot.on('message', (msg) => {
@@ -14,7 +14,7 @@ bot.on('message', (msg) => {
         users.push(msg.from.id);
         console.log(`New user ${msg.from.first_name} with and id ${msg.from.id} joined the bot`);
     } else {
-        bot.sendMessage(msg.from.id, "Hello again " + "<b>" + msg.from.first_name + "</b>, how are you today?", {
+        bot.sendMessage(msg.from.id, "Hello again " + "<b>" + msg.from.first_name + "</b>, how are you today? " + emoji.heart, {
             parse_mode: "HTML"
         });        
     }
