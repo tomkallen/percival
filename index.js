@@ -4,11 +4,19 @@ const bot = new TelegramBot(token, {
     polling: true
 });
 
-bot.on('message', (msg) => {    
-    if (msg.text.toLowerCase().indexOf("hi") === 0) {
-        bot.sendMessage(msg.from.id, "Hello " + "<b>" + msg.from.first_name + "</b>, how are you today?", {
+const users = [];
+
+bot.on('message', (msg) => {
+    if (users.indexOf(msg.from.id) === -1) {
+        bot.sendMessage(msg.from.id, "Hello " + "<b>" + msg.from.first_name + "</b>, nice to meet you! You are new here, right? I am Percival, your new friend, lets get to know each other!", {
             parse_mode: "HTML"
         });
+        users.push(msg.from.id);
+        console.log(`New user ${msg.from.first_name} with and id ${msg.from.id} joined the bot`);
+    } else {
+        bot.sendMessage(msg.from.id, "Hello again " + "<b>" + msg.from.first_name + "</b>, how are you today?", {
+            parse_mode: "HTML"
+        });        
     }
 });
 
@@ -16,7 +24,7 @@ bot.onText(/\/start/, (msg) => {
     bot.sendMessage(msg.chat.id, "Welcome! My name is Percival and I am your new friend!", {
         "reply_markup": {
             "keyboard": [
-                ["Set up"]                
+                ["Set up"]
             ]
         }
     });
